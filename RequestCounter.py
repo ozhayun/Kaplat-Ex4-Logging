@@ -1,4 +1,4 @@
-req_count = 1
+req_count = 0
 
 def increase_req_count():
     global req_count

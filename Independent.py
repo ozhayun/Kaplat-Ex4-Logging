@@ -6,7 +6,7 @@ independent_logger = hr.independent_logger
 
 
 # This function calculate from number/s and operation
-def calc(request, post_body):
+def calc(post_body):
     op = post_body['operation'].lower()
     args = post_body['arguments']
     num_of_args = len(args)
@@ -44,7 +44,7 @@ def independent_unary_op(op, args):
     val = Calculator.calc_unary_op(op, args[0])
 
     independent_logger.info("Performing operation %s. Result is %s", op, val)
-    independent_logger.debug("Performng operation: %s(%s) = %s", op, args[0], val)
+    independent_logger.debug("Performing operation: %s(%s) = %s", op, args[0], val)
 
     return Response(hr.convert_to_json(val, None), 200)
 
@@ -58,7 +58,7 @@ def independent_binary_op(op, args):
     val = Calculator.calc_binary_op(op, args[0], args[1])
 
     independent_logger.info("Performing operation %s. Result is %s", op, val)
-    independent_logger.debug("Performng operation: %s(%s,%s) = %s", op, args[0], args[1], val)
+    independent_logger.debug("Performing operation: %s(%s,%s) = %s", op, args[0], args[1], val)
 
     return Response(hr.convert_to_json(val, None), 200)
 
