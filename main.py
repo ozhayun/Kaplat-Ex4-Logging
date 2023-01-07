@@ -1,26 +1,23 @@
 from flask import Flask, request
-import handle_req, handle_logging
+
+import HandleRequest, HandleLogging, RequestCounter, Independent, Stack
 
 app = Flask(__name__)
-req_count = 1
+HandleLogging.create_logs_directory()
 stack = []
+
 
 @app.route('/independent/calculate', methods=['GET', 'POST'])
 def independent_calc():
     if request.method == 'POST':
-
-        handle_logging.try_log()
-
         post_body = request.get_json(request.data)
-        # print(post_body)
-        result = handle_req.independent_calc(post_body)
-        # print(result.get_data())
+        result = Independent.calc(request, post_body)
     return result
 
 
 @app.route('/stack/size', methods=['GET'])
 def get_stack_size():
-    return handle_req.stack_size(len(stack))
+    return Stack.stack_size(len(stack))
 
 
 @app.route('/stack/arguments', methods=['PUT', 'DELETE'])
@@ -28,30 +25,21 @@ def handle_arg():
 
     if request.method == 'PUT':
         body = request.get_json(request.data)
-        res = handle_req.add_arguments(stack, body)
-        # print("add args")
-        # print(stack)
+        res = Stack.add_arguments(stack, body)
         return res
     else:  # delete request
-        # print("Before delete")
-        # print(stack)
         query_param = dict(request.args)
-        res = handle_req.delete_arguments(stack, query_param)
-        # print("delete args")
-        # print("stack Size: " + str(res.get_data()))
-        # print(stack)
+        res = Stack.delete_arguments(stack, query_param)
         return res
 
 
 @app.route('/stack/operate', methods=['GET'])
 def calc_from_stack():
-    # print("Calc from stack, current size: " + str(len(stack)))
     query_param = dict(request.args)
-    res = handle_req.calc_from_stack(stack, query_param['operation'])
-    # print(res.get_data())
-    # print("Current size: " + str(len(stack)))
+    res = Stack.calc(stack, query_param['operation'])
     return res
 
 
 if __name__ == '__main__':
     app.run(host="localhost", port=8496, debug=True)
+

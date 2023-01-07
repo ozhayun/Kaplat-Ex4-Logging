@@ -1,5 +1,6 @@
 import math
 
+
 # This function check if the operation is valid
 def is_valid_op(operation):
     if (operation == 'plus' or
@@ -13,6 +14,7 @@ def is_valid_op(operation):
             operation == 'fact'):
         return 1
     return 0
+
 
 # This function calculate binary operation
 def calc_binary_op(operation, x, y):
@@ -28,12 +30,14 @@ def calc_binary_op(operation, x, y):
         return my_pow(x, y)
     return False
 
+
 # This function calculate unary operation
 def calc_unary_op(operation, x):
     if operation == 'abs':
         return my_abs(x)
     if operation == 'fact':
         return my_fact(x)
+
 
 # operations implement:
 
