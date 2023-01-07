@@ -5,11 +5,14 @@ import sys
 format = "%(asctime)s.%(msecs)03d %(levelname)s: %(message)s"
 datefmt = "%d-%m-%Y %H:%M:%S"
 
+if not os.path.exists(os.getcwd() + "/logs"):
+    os.makedirs(os.getcwd() + "/logs")
 
-def create_logs_directory():
-    # Create logs directory
-    if not os.path.exists(os.getcwd() + "/logs"):
-        os.makedirs(os.getcwd() + "/logs")
+
+# def create_logs_directory():
+#     # Create logs directory
+#     if not os.path.exists(os.getcwd() + "/logs"):
+#         os.makedirs(os.getcwd() + "/logs")
 
 
 def init_request_logger():
@@ -137,7 +140,3 @@ def log_setup(log_name, file_name, log_level=logging.INFO, stream=sys.stdout):
 #     ])
 # logging.info("Info message | request #%d", main.req_count)
 # main.req_count = main.req_count + 1
-
-request_logger = init_request_logger()
-stack_logger = init_stack_logger()
-independent_logger = init_independent_logger()

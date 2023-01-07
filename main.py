@@ -1,9 +1,7 @@
 from flask import Flask, request
-
 import HandleRequest, HandleLogging, RequestCounter, Independent, Stack
 
 app = Flask(__name__)
-HandleLogging.create_logs_directory()
 stack = []
 
 
@@ -17,7 +15,7 @@ def independent_calc():
 
 @app.route('/stack/size', methods=['GET'])
 def get_stack_size():
-    return Stack.stack_size(len(stack))
+    return Stack.stack_size(stack)
 
 
 @app.route('/stack/arguments', methods=['PUT', 'DELETE'])

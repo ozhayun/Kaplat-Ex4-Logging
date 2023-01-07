@@ -1,3 +1,5 @@
+import logging
+
 import Calculator
 from flask import Response
 import HandleRequest as hr
@@ -5,12 +7,17 @@ import HandleRequest as hr
 stack_logger = hr.stack_logger
 
 
-def stack_size(size):
-    return Response(hr.convert_to_json(size, None), 200)
+def stack_size(stack):
+    stack_logger.setLevel(logging.DEBUG)
+    stack_logger.info("Stack size is %d", len(stack))
+    stack_logger.debug("Stack content (first == top): [" + ','.join(str(v) for v in reversed(stack)) + "]")
+    stack_logger.setLevel(logging.INFO)
+    return Response(hr.convert_to_json(len(stack), None), 200)
 
 
 def add_arguments(stack, put_body):
     args = put_body['arguments']
+    stack_size_before = len(stack)
 
     for i in args:
         if not isinstance(i, int):
@@ -18,6 +25,14 @@ def add_arguments(stack, put_body):
 
     for i in args:
         stack.append(i)
+
+    stack_logger.setLevel(logging.DEBUG)
+    stack_logger.info("Adding total of %d argument(s) to the stack | Stack size: %d", len(args), len(stack))
+    stack_logger.debug("Adding arguments: " + ','.join(str(a) for a in args) + " |"
+                       " Stack size before %d |"
+                       " stack size after %d", stack_size_before, len(stack))
+    stack_logger.setLevel(logging.INFO)
+
     return Response(hr.convert_to_json(len(stack), None), 200)
 
 
