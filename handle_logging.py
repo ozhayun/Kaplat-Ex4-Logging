@@ -1,6 +1,6 @@
 import logging
+import os
 import sys
-
 import main
 
 
@@ -13,6 +13,10 @@ def try_log():
     # logger.addHandler(file_handler)
     # logger.addHandler(logging.StreamHandler(stream=sys.stdout))
     # logger.info("Info message | request #%d", main.req_count)
+
+    # Create logs directory
+    if not os.path.exists(os.getcwd() + "/logs"):
+        os.makedirs(os.getcwd() + "/logs")
 
     logging.basicConfig(
         level=logging.INFO,
