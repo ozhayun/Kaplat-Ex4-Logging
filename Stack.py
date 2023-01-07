@@ -129,6 +129,10 @@ def delete_arguments(stack, delete_body):
     if args <= len(stack):
         for i in range(args):
             stack.pop()
+        stack_logger.info("Removing total %d argument(s) from the stack |"
+                          " Stack size: %d", args, len(stack))
         return Response(hr.convert_to_json(len(stack), None), 200)
+    stack_logger.error("Server encountered an error ! message: Error: cannot remove " + str(args) +
+                       " from the stack. It has only " + str(len(stack)) + " arguments")
     return Response(hr.convert_to_json(None, "Error: cannot remove " + str(args) + " from the stack. It has only " +
                                        str(len(stack)) + " arguments"), status=409)
