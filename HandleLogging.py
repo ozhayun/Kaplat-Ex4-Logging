@@ -48,3 +48,5 @@ def init_independent_logger():
     logger.addHandler(fileHandler)
 
     return logger
+
+
