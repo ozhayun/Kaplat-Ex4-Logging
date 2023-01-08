@@ -30,7 +30,7 @@ def set_log_level(logger_name, logger_level):
     logger_level = logger_level.upper()
     if logger_level in levels.values():
         if logger_name == 'request-logger':
-            request_logger.setLevel(logger_level)                               #### check if  log lower case
+            request_logger.setLevel(logger_level)
             return Response(json.dumps(logger_level.upper()), status=200)
 
         if logger_name == 'stack-logger':

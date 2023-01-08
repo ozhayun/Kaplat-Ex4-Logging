@@ -1,13 +1,17 @@
 import logging
 import os
 import sys
+import RequestCounter as rc
 
-format = "%(asctime)s.%(msecs)03d %(levelname)s: %(message)s"
+format = "%(asctime)s.%(msecs)03d %(levelname)s: %(message)s | request # arg=%(arg)s"
 datefmt = "%d-%m-%Y %H:%M:%S"
 
 if not os.path.exists(os.getcwd() + "/logs"):
     os.makedirs(os.getcwd() + "/logs")
 
+# def filter():
+#     record.arg = rc.get_req_count()
+#     return True
 
 def init_request_logger():
     logger = logging.getLogger("request-logger")
@@ -20,6 +24,7 @@ def init_request_logger():
     logger.setLevel(logging.INFO)
     logger.addHandler(fileHandler)
     logger.addHandler(streamHandler)
+    #logger.addFilter(filter())
 
     return logger
 

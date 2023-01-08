@@ -18,9 +18,8 @@ def convert_to_json(result, error_message):
     return response
 
 
-
 def request_log(path, method, start):
     diff = (datetime.now() - start).total_seconds() * 1000
     request_logger.info("Incoming request | #%d | resource: %s | HTTP Verb %s",
                         rc.get_req_count(), path, method)
-    request_logger.debug(f"request #{rc.get_req_count()} duration: {diff}ms")
+    request_logger.debug(f"request  # {rc.get_req_count()} duration: {diff}ms")

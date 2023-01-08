@@ -8,10 +8,8 @@ stack_logger = hr.stack_logger
 
 
 def stack_size(stack):
-    stack_logger.setLevel(logging.DEBUG)
     stack_logger.info("Stack size is %d", len(stack))
     stack_logger.debug("Stack content (first == top): [" + ','.join(str(v) for v in reversed(stack)) + "]")
-    stack_logger.setLevel(logging.INFO)
     return Response(hr.convert_to_json(len(stack), None), 200)
 
 
@@ -21,6 +19,7 @@ def add_arguments(stack, put_body):
 
     for i in args:
         if not isinstance(i, int):
+            stack_logger.error("Server encountered an error ! message: Error: not all arguments are valid")
             return Response(hr.convert_to_json(None, "Error: not all arguments are valid"), 409)
 
     for i in args:
@@ -29,9 +28,7 @@ def add_arguments(stack, put_body):
     stack_logger.setLevel(logging.DEBUG)
     stack_logger.info("Adding total of %d argument(s) to the stack | Stack size: %d", len(args), len(stack))
     stack_logger.debug("Adding arguments: " + ','.join(str(a) for a in args) + " |"
-                                                                               " Stack size before %d |"
-                                                                               " stack size after %d",
-                       stack_size_before, len(stack))
+                       " Stack size before %d | stack size after %d", stack_size_before, len(stack))
     stack_logger.setLevel(logging.INFO)
 
     return Response(hr.convert_to_json(len(stack), None), 200)
@@ -50,6 +47,7 @@ def calc(stack, operation):
 
     # No such operation
     else:
+        stack_logger.error("Server encountered an error ! message: Error: unknown operation: " + str(operation))
         return Response(hr.convert_to_json(None, "Error: unknown operation: " + str(operation)), status=409)
 
 
@@ -65,11 +63,9 @@ def handle_stack_binary_op(stack, operation, is_valid_op):
         # Make operation
         val = Calculator.calc_binary_op(operation, x, y)
 
-        # stack_logger.setLevel(logging.DEBUG)
         stack_logger.info("Performing operation %s. Result is %d |"
                           " stack size: %d", operation, val, len(stack))
         stack_logger.debug("Performing operation: %s(%d,%d) = %d", operation, x, y, val)
-        # stack_logger.setLevel(logging.INFO)
         return Response(hr.convert_to_json(val, None), status=200)
 
     # Not enough arguments
