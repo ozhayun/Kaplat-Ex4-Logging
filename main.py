@@ -12,7 +12,7 @@ request_logger = hr.request_logger
 
 @app.route('/',methods =['GET'])
 def nothing():
-    return "Hey Ido"
+    return "Hey Idob"
 
 @app.route('/independent/calculate', methods=['GET', 'POST'])
 def independent_calc():
