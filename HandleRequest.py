@@ -24,7 +24,7 @@ def convert_to_json(result, error_message):
 def request_log(path, method, start):
     request_logger.info("Incoming request | #%d | resource: %s | HTTP Verb %s",
                         rc.get_req_count(), path, method)
-    request_logger.debug(f"request # {rc.get_req_count()} duration: {int(duration(start))}ms")
+    request_logger.debug(f"request #{rc.get_req_count()} duration: {int(duration(start))}ms")
 
 
 # This function calculate the time diff from start operation to finish
