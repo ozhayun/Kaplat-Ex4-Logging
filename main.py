@@ -10,14 +10,11 @@ app = Flask(__name__)
 stack = []
 request_logger = hr.request_logger
 
-@app.route('/',methods =['GET'])
-def nothing():
-    return "Hey Idob"
 
 @app.route('/independent/calculate', methods=['GET', 'POST'])
 def independent_calc():
     if request.method == 'POST':
-        start = datetime.now()
+        start = hr.get_time()
         rc.increase_req_count()
 
         post_body = request.get_json(request.data)
@@ -29,7 +26,7 @@ def independent_calc():
 
 @app.route('/stack/size', methods=['GET'])
 def get_stack_size():
-    start = datetime.now()
+    start = hr.get_time()
     rc.increase_req_count()
 
     res = Stack.stack_size(stack)
@@ -40,7 +37,7 @@ def get_stack_size():
 
 @app.route('/stack/arguments', methods=['PUT', 'DELETE'])
 def handle_arg():
-    start = datetime.now()
+    start = hr.get_time()
     rc.increase_req_count()
 
     if request.method == 'PUT':
@@ -56,7 +53,7 @@ def handle_arg():
 
 @app.route('/stack/operate', methods=['GET'])
 def calc_from_stack():
-    start = datetime.now()
+    start = hr.get_time()
     rc.increase_req_count()
     query_param = dict(request.args)
 
@@ -65,21 +62,22 @@ def calc_from_stack():
     hr.request_log(request.path, request.method.upper(), start)
     return res
 
+
 @app.route('/logs/level', methods=['GET', 'PUT'])
 def logs_level():
-    start = datetime.now()
+    start = hr.get_time()
     rc.increase_req_count()
     logger_name = dict(request.args)['logger-name']
 
     if request.method == 'GET':
         res = LogLevel.get_log_level(logger_name)
 
-    else: # method 'PUT'
+    else:  # method 'PUT'
         logger_level = dict(request.args)['logger-level']
         res = LogLevel.set_log_level(logger_name, logger_level)
     hr.request_log(request.path, request.method.upper(), start)
     return res
 
+
 if __name__ == '__main__':
     app.run(host="localhost", port=9583, debug=True)
-
