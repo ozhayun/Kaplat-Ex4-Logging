@@ -7,10 +7,13 @@ import ArgFilterFile
 format = "%(asctime)s.%(msecs)03d %(levelname)s: %(message)s | request #%(arg)s"
 date_format = "%d-%m-%Y %H:%M:%S"
 
+
+# create logs folder in project directory
 if not os.path.exists(os.getcwd() + "/logs"):
     os.makedirs(os.getcwd() + "/logs")
 
 
+# This function init request-loggr
 def init_request_logger():
     logger = logging.getLogger("request-logger")
     formatter = logging.Formatter(format, date_format)
@@ -27,6 +30,7 @@ def init_request_logger():
     return logger
 
 
+# This function init stack-loggr
 def init_stack_logger():
     logger = logging.getLogger("stack-logger")
     formatter = logging.Formatter(format, date_format)
@@ -41,6 +45,7 @@ def init_stack_logger():
     return logger
 
 
+# This function init independent-loggr
 def init_independent_logger():
     logger = logging.getLogger("independent-logger")
     formatter = logging.Formatter(format, date_format)

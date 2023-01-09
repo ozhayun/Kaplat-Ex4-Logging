@@ -18,7 +18,7 @@ def is_valid_op(operation):
 
 # This function calculate binary operation
 def calc_binary_op(operation, x, y):
-    if (operation == 'plus'):
+    if operation == 'plus':
         return plus(x, y)
     if operation == 'minus':
         return minus(x, y)

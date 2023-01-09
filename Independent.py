@@ -33,6 +33,7 @@ def calc(post_body):
         return too_many_args(post_body)
 
 
+# This function handle independent unary operation
 def independent_unary_op(op, args):
     if op == 'fact' and args[0] < 0:
         independent_logger.error("Server encountered an error ! message:"
@@ -49,6 +50,7 @@ def independent_unary_op(op, args):
     return Response(hr.convert_to_json(val, None), 200)
 
 
+# This function handle independent binary operation
 def independent_binary_op(op, args):
     if op == 'divide' and args[1] == 0:  # Divide by zero is illegal
         independent_logger.error("Server encountered an error ! message:"
@@ -63,6 +65,7 @@ def independent_binary_op(op, args):
     return Response(hr.convert_to_json(val, None), 200)
 
 
+# This function handle not such operation
 def not_such_op(post_body):
     independent_logger.error("Server encountered an error ! message: Error: unknown operation: " +
                              str(post_body['operation']))
@@ -70,6 +73,7 @@ def not_such_op(post_body):
                                        str(post_body['operation'])), status=409)
 
 
+# This function handle not enough arguments
 def not_enough_args(post_body):
     independent_logger.error("Server encountered an error ! message:"
                              " Error: Not enough arguments to perform the operation " +
@@ -78,6 +82,7 @@ def not_enough_args(post_body):
                                        str(post_body['operation'])), status=409)
 
 
+# This function handle too many arguments fault in independent calculator
 def too_many_args(post_body):
     independent_logger.error("Server encountered an error ! message:"
                              " Error: Too many arguments to perform the operation " +

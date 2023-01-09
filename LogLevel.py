@@ -1,4 +1,3 @@
-import json
 import HandleRequest as hr
 from flask import Response
 

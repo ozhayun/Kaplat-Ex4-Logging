@@ -7,12 +7,14 @@ import HandleRequest as hr
 stack_logger = hr.stack_logger
 
 
+# This function return the stack size
 def stack_size(stack):
     stack_logger.info("Stack size is %d", len(stack))
     stack_logger.debug("Stack content (first == top): [" + ','.join(str(v) for v in reversed(stack)) + "]")
     return Response(hr.convert_to_json(len(stack), None), 200)
 
 
+# This function add arguments to stack
 def add_arguments(stack, put_body):
     args = put_body['arguments']
     stack_size_before = len(stack)
@@ -34,6 +36,7 @@ def add_arguments(stack, put_body):
     return Response(hr.convert_to_json(len(stack), None), 200)
 
 
+# This function make the calculate operation
 def calc(stack, operation):
     is_valid_op = Calculator.is_valid_op(operation)
 
@@ -51,6 +54,7 @@ def calc(stack, operation):
         return Response(hr.convert_to_json(None, "Error: unknown operation: " + str(operation)), status=409)
 
 
+# This function handle binary operation of stack
 def handle_stack_binary_op(stack, operation, is_valid_op):
     if len(stack) >= 2:
         x = stack.pop()
@@ -73,6 +77,7 @@ def handle_stack_binary_op(stack, operation, is_valid_op):
         return not_enough_args(stack, operation, is_valid_op)
 
 
+# This function handle divide by zero fault
 def divide_by_zero():
     stack_logger.error("Server encountered an error ! message:"
                        " Error while performing operation Divide: division by 0")
@@ -80,6 +85,7 @@ def divide_by_zero():
                     status=409)
 
 
+# This function handle not enough arguments to make operation fault
 def not_enough_args(stack, operation, is_valid_op):
     stack_logger.error("Server encountered an error ! message: "
                        "Error: cannot implement operation " + str(operation) +
@@ -91,6 +97,7 @@ def not_enough_args(stack, operation, is_valid_op):
                                        str(len(stack)) + " arguments"), status=409)
 
 
+# This function handle unary operation of stack
 def handle_stack_unary_op(stack, operation, is_valid_op):
     if len(stack) >= 1:
         x = stack.pop()
@@ -112,6 +119,7 @@ def handle_stack_unary_op(stack, operation, is_valid_op):
         return not_enough_args(stack, operation, is_valid_op)
 
 
+# This function handle negative number and factorial operation fault
 def negative_fact():
     stack_logger.error("Server encountered an error ! message: Error while performing operation Factorial: not "
                        "supported for the negative number")
