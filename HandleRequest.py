@@ -29,7 +29,7 @@ def request_log(path, method, start):
 
 # This function calculate the time diff from start operation to finish
 def duration(start):
-    start_time = datetime.strptime(str(start), date_format)
+    start_time = datetime.strptime(start, date_format)
     end_time = datetime.strptime(get_time(), date_format)
     diff = end_time - start_time
     ms = diff.total_seconds() * 1000
