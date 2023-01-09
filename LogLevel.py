@@ -22,7 +22,7 @@ def get_log_level(logger_name):
         return Response(levels[stack_logger.getEffectiveLevel()], status=200)
     if logger_name == 'independent-logger':
         return Response(levels[independent_logger.getEffectiveLevel()], status=200)
-    return Response("Logger: %s, not exists", logger_name, status=409)
+    return Response("Logger not exists", status=409)
 
 
 # This function sets the logger to requested level
